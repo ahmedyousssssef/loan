@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <record id="view_loan_form" model="ir.ui.view">
+        <field name="name">Employees Loans Form</field>
+        <field name="model">hr.loan</field>
+        <field name="arch" type="xml">
+            <form string="Employees Loans">
+                <header>
+                    <button name="action_approved" states="draft" string="Approve" type="object" class="oe_highlight"
+                            groups="hr.group_hr_manager"/>
+                    <button name="action_cancel" states="draft" string="Cancel" type="object" class="oe_highlight"
+                            groups="hr.group_hr_manager"/>
+                    <button name="%(hr_loan.view_loan_payment_wizard_action)d" states="approved"
+                            string="Make Payment" type="action" class="oe_highlight"
+                            groups="hr.group_hr_manager"/>
+                    <button name="%(hr_loan.view_payment_delay_wizard_action)d" states="approved"
+                            string="Delay Payments" type="action" class="oe_highlight"
+                            groups="hr.group_hr_manager"/>
+                    <button string="Send Payment Loan Request" type="object" name="send_payment_request"
+                            attrs="{'invisible':[('state','!=','approved')]}"/>
+
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <group>
+                    <group>
+                        <field name="journal_created" invisible="True"/>
+                        <field name="name" attrs="{'readonly':[('state','in',['cancel','approved','sent','closed'])]}"/>
+                        <field name="employee_id" required="1"
+                               attrs="{'readonly':[('state','in',['cancel','approved','sent','closed'])]}"/>
+                        <field name="company_id" readonly="1"/>
+                        <field name="requested_amount" required="1"
+                               attrs="{'readonly':[('state','in',['cancel','approved','sent','closed'])]}"/>
+
+                        <!--<field name="installment" required="1"-->
+                        <!--attrs="{'readonly':[('state','in',['cancel','approved','sent','closed'])]}"/>-->
+                        <field name="installment_amount" required="1"
+                               attrs="{'readonly':[('state','in',['cancel','approved','sent','closed'])]}"/>
+
+                    </group>
+
+                    <group>
+                        <field name="requested_date" required="1"
+                               attrs="{'readonly':[('state','in',['cancel','approved','sent','closed'])]}"/>
+                        <field name="settlement_date" required="1"
+                               attrs="{'readonly':[('state','in',['cancel','approved','sent','closed'])]}"/>
+                        <!--<field name="remaining_budget"/>-->
+
+                    </group>
+
+
+                </group>
+                <notebook>
+                    <page string="Payments Details">
+                        <div class="oe_inline oe_stat_button">
+                            <button name="action_populate" attrs="{'invisible': [('state', '!=', 'draft')]}"
+                                    string="Populate Lines" type="object"
+                                    class="oe_stat_button"
+                                    confirm="Sure To Create New Lines ?">
+                            </button>
+                        </div>
+                        <!--attrs="{'readonly':[('state','in',['cancel','approved','closed'])]}"-->
+                        <field name="loan_line"
+                               attrs="{'readonly':[('state','in',['cancel','approved','sent','closed'])]}">
+                            <tree string="Payments Details" editable="bottom">
+                                <field name="date" required="1"/>
+                                <field name="amount" required="1" sum="Total Amount"/>
+                                <field name="paid_amount" required="1" sum="Total Paid"/>
+                                <field name="state" readonly="1"/>
+                                <field name="payslip_id" readonly="1"/>
+                            </tree>
+                        </field>
+                    </page>
+                </notebook>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="loan_tree_view">
+        <field name="name">Employees Loans Tree</field>
+        <field name="model">hr.loan</field>
+        <field name="arch" type="xml">
+            <tree string="Employees Loans">
+                <field name="name"/>
+                <field name="employee_id"/>
+                <field name="company_id"/>
+                <field name="requested_date"/>
+                <field name="requested_amount" sum="Total Requested"/>
+                <!--<field name="installment"/>-->
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="loan_search_view">
+        <field name="name">Employees Loans search</field>
+        <field name="model">hr.loan</field>
+        <field name="arch" type="xml">
+            <search string="Search Loans">
+                <field name="employee_id"/>
+                <field name="name"/>
+            </search>
+        </field>
+    </record>
+
+    <!-- Actions -->
+
+    <record model="ir.actions.act_window" id="action_loan_tree_view">
+        <field name="name">Employees Loans</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">hr.loan</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="loan_tree_view"/>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click to create a Employee Loan.
+            </p>
+            <p>
+                track Employee Loans.
+            </p>
+        </field>
+    </record>
+
+    <record id="view_acc_loan_payment_wizard_view_form" model="ir.ui.view">
+        <field name="name">acc.loan.payment.view.wizard.form</field>
+        <field name="model">acc.loan.payment.view.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <h5 style="text-align:center">
+                    Payment Loan Request Sent Successfully.
+                </h5>
+                <footer>
+                    <button string="Close" type="special" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_payslip_loan_form_inherited" model="ir.ui.view">
+        <field name="name">view_payslip_loan_form_inherited</field>
+        <field name="model">hr.payslip</field>
+        <field name="inherit_id" ref="hr_payroll.view_hr_payslip_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+
+                <page string="Loan Lines">
+                    <field name="loan_lines_ids" readonly="1">
+                        <tree editable="bottom" string="Loan Lines" default_order="date">
+                            <field name="loan_id"/>
+                            <field name="date"/>
+                            <field name="amount" sum="Total Amount"/>
+                            <field name="state"/>
+                        </tree>
+
+                    </field>
+
+                </page>
+
+
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Menus -->
+
+    <menuitem
+            id="menu_view_loan"
+            name="Loans"
+            action="action_loan_tree_view"
+            parent="hr.menu_hr_root"
+            sequence="98"
+    />
+
+
+</openerp>

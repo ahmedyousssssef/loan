@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <!--<record id="hr_rule_loan" model="hr.salary.rule">-->
+        <!--<field name="name">Salary Rule Loan</field>-->
+        <!--<field name="sequence" eval="150"/>-->
+        <!--<field name="code">SRL</field>-->
+        <!--<field name="category_id" ref="hr_payroll.DED"/>-->
+        <!--<field name="condition_select">none</field>-->
+        <!--<field name="amount_select">code</field>-->
+        <!--<field name="amount_python_compute">result = -payslip.loans</field>-->
+    <!--</record>-->
+
+
+    <record id="hr_Get_Loan_Rule" model="hr.salary.rule">
+        <field name="name">Loan Rule</field>
+        <field name="sequence" eval="150"/>
+        <field name="code">LOAN</field>
+        <field name="category_id" ref="hr_payroll.DED"/>
+        <field name="condition_select">none</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+loan_amount=0
+if payslip.loan_lines_ids:
+    loan_amount = sum((one_loan_line.amount - one_loan_line.paid_amount) for one_loan_line in payslip.loan_lines_ids)
+result = -1 * loan_amount
+        </field>
+    </record>
+
+    <!-- Salary Structure -->
+
+    <!--<record id="structure_base2_inherited" model="hr.payroll.structure">-->
+        <!--<field name="code">BASE</field>-->
+        <!--<field name="name">Base for new structures</field>-->
+        <!--<field name="inherit_id" ref="hr_payroll.structure_base"/>-->
+        <!--<field eval="[(6, 0, [ref('hr_payroll.hr_rule_basic'),-->
+        <!--ref('hr_payroll.hr_rule_taxable'),ref('hr_payroll.hr_rule_net'), ref('hr_advance.hr_rule_advance'), ref('hr_rule_loan')])]"-->
+               <!--name="rule_ids"/>-->
+    <!--</record>-->
+
+
+</openerp>

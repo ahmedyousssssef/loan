@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+
+
+        <record id="seq_loan_payment_requests" model="ir.sequence">
+            <field name="name">Loan Payments</field>
+            <field name="code">loan.payment</field>
+            <field name="prefix"></field>
+            <field name="padding">4</field>
+        </record>
+
+    </data>
+</openerp>

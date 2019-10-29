@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        
+        <record id="view_loan_payment_wizard_form" model="ir.ui.view">
+            <field name="name">loan.register.payment.wizard.form</field>
+            <field name="model">loan.register.payment.wizard</field>
+            <field name="arch" type="xml">
+                <form string="MODEL">
+                    <sheet>
+                        <group>
+                            <field name="loan_journal_id" invisible="True"/>
+                            <field name="bank_journal_id"/>
+                            <field name="rel_partner_id"/>
+                            <field name="amount"/>
+                            <field name="date"/>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button name="validate_payment" string="Validate" type="object" class="oe_highlight"/>
+                        <button string="Cancel" type="special" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+        
+        <record id="view_loan_register_payment_wizard_action" model="ir.actions.act_window">
+            <field name="name">loan Register payment</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">loan.register.payment.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="view_type">form</field>
+            <field name="target">new</field>    
+
+        </record>
+
+        <record id="view_loan_payment_wizard_view_form" model="ir.ui.view">
+            <field name="name">loan.register.payment.wizard.form</field>
+            <field name="model">loan.register.payment.view.wizard</field>
+            <field name="arch" type="xml">
+                <form >
+                    <h6 style="text-align:center">
+                    Successfully Created Journal Entry!.
+                    </h6>
+                    <footer>
+                        <button string="Cancel" type="special" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_loan_register_payment_view_wizard_action" model="ir.actions.act_window">
+                <field name="name">loan Register payment</field>
+                <field name="type">ir.actions.act_window</field>
+                <field name="res_model">loan.register.payment.view.wizard</field>
+                <field name="view_mode">form</field>
+                <field name="view_type">form</field>
+                <!--<field name="target">new</field>-->
+
+            </record>
+
+    
+    </data>
+</openerp>

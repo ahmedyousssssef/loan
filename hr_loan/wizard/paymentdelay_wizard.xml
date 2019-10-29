@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        
+        <record id="view_payment_delay_wizard_form" model="ir.ui.view">
+            <field name="name">payment.delay.wizard.form</field>
+            <field name="model">payment.delay.wizard</field>
+            <field name="arch" type="xml">
+                <form string="MODEL">
+                    <sheet>
+                        <group>
+                            <field name="num_months"/>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button name="action_apply" string="Apply" type="object" class="oe_highlight" />
+                        <button string="Cancel" class="btn-default" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+        
+        <record id="view_payment_delay_wizard_action" model="ir.actions.act_window">
+            <field name="name">Payment Delay</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">payment.delay.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="view_type">form</field>
+            <field name="target">new</field>    
+        </record>
+    
+    </data>
+</openerp>
