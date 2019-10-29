@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="holidays_send_mail" model="mail.template">
+            <field name="name">Leave Request Is Sent</field>
+            <field name="model_id" ref="model_hr_holidays"/>
+            <field name="email_from">${(object.company_id.email or '')|safe}</field>
+            <field name="subject"><![CDATA[ Leave Request ]]></field>
+            <field name="auto_delete" eval="True"/>
+            <field name="lang">${object.lang}</field>
+            <field name="body_html">
+                <![CDATA[
+                <div style="text-align: right;direction:rtl">
+                    <p style="text-align: right">Dear</p>
+                        <p style="font-size: 1.1em;text-align: right">
+                            Kindly Approve.
+
+                        </p>
+
+
+                        <br/>
+                        <p style="text-align: right">Leave Type    ${object.name}  </p>
+                        <br/>
+                        <br/>
+                        <p style="text-align: right">Leave Requester    ${object.employee_id.name}  </p>
+                        <br/>
+
+
+                </div>
+                ]]></field>
+        </record>
+
+
+    </data>
+</openerp>

@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_gm_hr_custom_gm_hr_custom,gm_hr_custom.gm_hr_custom,model_gm_hr_custom_gm_hr_custom,,1,0,0,0

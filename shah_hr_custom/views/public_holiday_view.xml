@@ -1,0 +1,35 @@
+<openerp>
+    <data>
+        <!-- Inherit Form View to Modify it -->
+        <record id="edit_holiday_status_form_inherit_001" model="ir.ui.view">
+            <field name="name">hr.holidays.status.form.inherit</field>
+            <field name="model">hr.holidays.status</field>
+            <field name="inherit_id" ref="hr_holidays.edit_holiday_status_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='active']" position="after">
+                    <field name="is_public"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="edit_holiday_form_inherit_001" model="ir.ui.view">
+            <field name="name">hr.holidays.form.inherit</field>
+            <field name="model">hr.holidays</field>
+            <field name="inherit_id" ref="hr_holidays.edit_holiday_new"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='holiday_type']" position="after">
+                <field name="company_id" groups="base.group_multi_company"
+                       options="{'no_create': True}"/>
+                </xpath>
+                <xpath expr="//header/button[@name='validate']" position="replace">
+                    <button string="Approve" name="validate" states="confirm" type="object" groups="hr_holidays.group_hr_holidays_manager" class="oe_highlight"/>
+                </xpath>
+                <xpath expr="//header/button[@name='refuse']" position="replace">
+                    <button string="Refuse" name="validate" states="confirm,validate,validate1" type="object" groups="hr_holidays.group_hr_holidays_manager"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</openerp>
+

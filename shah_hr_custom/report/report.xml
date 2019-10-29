@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+     <report
+            id="hr_contract_action_report"
+            model="hr.contract"
+            report_type="qweb-pdf"
+            string="Contract"
+            name="shah_hr_custom.hr_contract_print_report"
+            file="shah_hr_custom.hr_contract_print_report"
+        />
+</openerp>
